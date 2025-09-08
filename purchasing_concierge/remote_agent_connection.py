@@ -12,12 +12,55 @@ from a2a.types import (
     TaskStatusUpdateEvent,
 )
 from dotenv import load_dotenv
+import json
+from typing import Any
+from a2a.client.errors import (
+    A2AClientHTTPError,
+    A2AClientJSONError,
+    A2AClientTimeoutError,
+)
 
 
 load_dotenv()
 
 TaskCallbackArg = Task | TaskStatusUpdateEvent | TaskArtifactUpdateEvent
 TaskUpdateCallback = Callable[[TaskCallbackArg, AgentCard], Task]
+
+
+async def _send_request(
+    self,
+    rpc_request_payload: dict[str, Any],
+    http_kwargs: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Sends a non-streaming JSON-RPC request to the agent.
+
+    Args:
+        rpc_request_payload: JSON RPC payload for sending the request.
+        http_kwargs: Optional dictionary of keyword arguments to pass to the
+            underlying httpx.post request.
+
+    Returns:
+        The JSON response payload as a dictionary.
+
+    Raises:
+        A2AClientHTTPError: If an HTTP error occurs during the request.
+        A2AClientJSONError: If the response body cannot be decoded as JSON.
+    """
+    try:
+        async with self.httpx_client as client:
+            response = await client.post(
+                self.url, json=rpc_request_payload, **(http_kwargs or {})
+            )
+            response.raise_for_status()
+            return response.json()
+    except httpx.ReadTimeout as e:
+        raise A2AClientTimeoutError("Client Request timed out") from e
+    except httpx.HTTPStatusError as e:
+        raise A2AClientHTTPError(e.response.status_code, str(e)) from e
+    except json.JSONDecodeError as e:
+        raise A2AClientJSONError(str(e)) from e
+    except httpx.RequestError as e:
+        raise A2AClientHTTPError(503, f"Network communication error: {e}") from e
 
 
 class RemoteAgentConnections:
