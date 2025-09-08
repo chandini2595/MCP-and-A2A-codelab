@@ -19,7 +19,7 @@ from a2a.client.errors import (
     A2AClientJSONError,
     A2AClientTimeoutError,
 )
-
+import requests
 
 load_dotenv()
 
@@ -47,12 +47,11 @@ async def _send_request(
         A2AClientJSONError: If the response body cannot be decoded as JSON.
     """
     try:
-        async with self.httpx_client as client:
-            response = await client.post(
-                self.url, json=rpc_request_payload, **(http_kwargs or {})
-            )
-            response.raise_for_status()
-            return response.json()
+        response = requests.post(
+            self.url, json=rpc_request_payload, **(http_kwargs or {})
+        )
+        response.raise_for_status()
+        return response.json()
     except httpx.ReadTimeout as e:
         raise A2AClientTimeoutError("Client Request timed out") from e
     except httpx.HTTPStatusError as e:
@@ -71,7 +70,11 @@ class RemoteAgentConnections:
         print(f"agent_url: {agent_url}")
         self._httpx_client = httpx.AsyncClient(timeout=30)
         self.agent_client = A2AClient(self._httpx_client, agent_card, url=agent_url)
-        self.agent_client._send_request = _send_request
+        
+        # Monkeypatch the _send_request method with our custom implementation
+        # This will replace the original method with our custom implementation
+        self.agent_client._send_request = _send_request.__get__(self.agent_client)
+        
         self.card = agent_card
 
     def get_agent(self) -> AgentCard:
