@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+<<<<<<< HEAD
 
 # C extensions
 *.so
@@ -31,12 +32,25 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+=======
+# C extensions
+*.so
+*.lock
+# Distribution / packaging
+.Python
+build/
+dist/
+eggs/
+*.egg-info/
+*.egg
+>>>>>>> f0f4d21c29c4bfe8db2424b50c6a49dafc4a7cb4
 
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+<<<<<<< HEAD
 htmlcov/
 .tox/
 .nox/
@@ -67,17 +81,32 @@ instance/
 
 # Scrapy stuff:
 .scrapy
+=======
+.tox/
+.coverage
+.cache
+.pytest_cache/
+>>>>>>> f0f4d21c29c4bfe8db2424b50c6a49dafc4a7cb4
 
 # Sphinx documentation
 docs/_build/
 
+<<<<<<< HEAD
 # PyBuilder
 .pybuilder/
 target/
+=======
+# PyInstaller
+#  usually added to MANIFEST.in as well
+#  via: ``pyinstaller --add-data "README;."``
+*.manifest
+*.spec
+>>>>>>> f0f4d21c29c4bfe8db2424b50c6a49dafc4a7cb4
 
 # Jupyter Notebook
 .ipynb_checkpoints
 
+<<<<<<< HEAD
 # IPython
 profile_default/
 ipython_config.py
@@ -172,3 +201,23 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+=======
+# Virtual environment
+.env/
+venv/
+env/
+/venv
+/env
+.venv
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# MyPy
+.mypy_cache/
+
+>>>>>>> f0f4d21c29c4bfe8db2424b50c6a49dafc4a7cb4
