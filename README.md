@@ -6,7 +6,6 @@
 | Create multi agent system with ADK, deploy in Agent Engine and get started with A2A protocol | [View Codelab](https://codelabs.developers.google.com/codelabs/create-multi-agents-adk-a2a#0) | [Watch Video](https://youtu.be/sFbqIPGscWU) |
 | Getting started with adk, mcp and a2a | [View Codelab](https://codelabs.developers.google.com/codelabs/currency-agent#0) | [Watch Video](https://youtu.be/UIWK7b2e3JM) |
 | Getting started with a2a action engine | [View Codelab](https://codelabs.developers.google.com/intro-a2a-purchasing-concierge#0) | [Watch Video](https://youtu.be/tOUmeDoAX8s) |
-> **⚠️ DISCLAIMER: THIS IS NOT AN OFFICIALLY SUPPORTED GOOGLE PRODUCT. THIS PROJECT IS INTENDED FOR DEMONSTRATION PURPOSES ONLY. IT IS NOT INTENDED FOR USE IN A PRODUCTION ENVIRONMENT.**
 
 This demo shows how to enable A2A (Agent2Agent) protocol communication between purchasing concierge agent with the remote pizza and burger seller agents using A2A Python SDK. Burger and Pizza seller agents is a independent agent that can be run on different server with different frameworks, in this demo example we, burger agent is built on top of Crew AI and pizza agent is built on top of LangGraph.
 
